@@ -1,6 +1,7 @@
 package com.josrom.recetarium.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,29 +9,32 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.josrom.recetarium.Constant;
 import com.josrom.recetarium.R;
+import com.josrom.recetarium.model.Recipe;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
 
-    private List<String> friends;
-    private Activity activity;
+    private List<Recipe> recipes;
+    private Context context;
 
-    public HomeRecyclerAdapter(Activity activity, List<String> friends) {
-        this.friends = friends;
-        this.activity = activity;
+    public HomeRecyclerAdapter(Context context, List<Recipe> recipes) {
+        this.recipes = recipes;
+        this.context = context;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int listPosition) {
         TextView textViewName = holder.textTitleRecipe;
-        TextView textViewVersion = holder.textOtherRecipe;
+        TextView textOtherRecipe = holder.textOtherRecipe;
         ImageView imageView = holder.imageRecipe;
 
-        textViewName.setText(friends.get(listPosition));
-        textViewVersion.setText(friends.get(listPosition));
-        imageView.setImageResource(R.drawable.web_hi_res_512);
+        textViewName.setText(recipes.get(listPosition).getTitle());
+        textOtherRecipe.setText(recipes.get(listPosition).getImageMain().getUrl());
+        Picasso.with(context).load(Constant.URL + recipes.get(listPosition).getImageMain().getUrl()).into(imageView);
     }
 
     @Override
@@ -41,7 +45,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return (null != friends ? friends.size() : 0);
+        return (null != recipes ? recipes.size() : 0);
     }
 
     /**
