@@ -1,5 +1,6 @@
 package com.josrom.recetarium.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.DrawerLayout;
@@ -8,7 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -33,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<Recipe> mListRecipes = null;
     private String url = null;
+    private ProgressBar progressBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,10 @@ public class HomeActivity extends AppCompatActivity {
             recyclerView.setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(layoutManager);
+            progressBar = (ProgressBar) findViewById(R.id.loading);
+            if (progressBar != null) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
 
             setData(); //adding data to array list
         }
@@ -78,6 +86,7 @@ public class HomeActivity extends AppCompatActivity {
                             }
 
                             recyclerView.setAdapter(new HomeRecyclerAdapter(getApplicationContext(), mListRecipes));
+                            progressBar.setVisibility(View.GONE);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
