@@ -23,12 +23,13 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    app:layout_widthPercent="100%"
-                    app:layout_aspectRatio="178%"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/main_image_home"
                     android:scaleType="centerCrop"
                     android:contentDescription="asfdf"
                     card_view:srcCompat="@mipmap/ic_launcher" />
+                <!--app:layout_aspectRatio="178%" -->
                 <!-- The rest of your layout -->
             </android.support.percent.PercentRelativeLayout>
 

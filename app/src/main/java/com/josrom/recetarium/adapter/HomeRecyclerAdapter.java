@@ -1,6 +1,5 @@
 package com.josrom.recetarium.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,23 +17,32 @@ import java.util.List;
 
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
 
+    private final int width;
+    private final int height;
     private List<Recipe> recipes;
     private Context context;
 
     public HomeRecyclerAdapter(Context context, List<Recipe> recipes) {
         this.recipes = recipes;
         this.context = context;
+
+        this.width = Constant.getScreenWidth(context);
+        this.height = Math.round(this.width * 9 / 16);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int listPosition) {
         TextView textViewName = holder.textTitleRecipe;
         TextView textOtherRecipe = holder.textOtherRecipe;
-        ImageView imageView = holder.imageRecipe;
+        final ImageView imageView = holder.imageRecipe;
 
         textViewName.setText(recipes.get(listPosition).getTitle());
         textOtherRecipe.setText(recipes.get(listPosition).getImageMain().getUrl());
-        Picasso.with(context).load(Constant.URL + recipes.get(listPosition).getImageMain().getUrl()).into(imageView);
+        Picasso.with(context)
+                .load(Constant.URL + recipes.get(listPosition).getImageMain().getUrl())
+                .resize(width, height)
+                .centerCrop()
+                .into(imageView);
     }
 
     @Override
